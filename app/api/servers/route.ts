@@ -31,8 +31,6 @@ export async function POST(req: Request) {
             {
               profileId: profile.id,
               role: MemberRole.ADMIN,
-              name,
-              imageUrl,
             },
           ],
         },
