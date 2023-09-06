@@ -49,7 +49,10 @@ export const ServerHeader = ({ server, role }: ServerHeaderProps) => {
             >
               Server settings <Settings className="w-5 h-5 ml-auto" />
             </DropdownMenuItem>
-            <DropdownMenuItem className="px-3 py-3 text-sm cursor-pointer">
+            <DropdownMenuItem
+              onClick={() => onOpen("members", { server })}
+              className="px-3 py-3 text-sm cursor-pointer"
+            >
               Manage members <Users className="w-5 h-5 ml-auto" />
             </DropdownMenuItem>
           </>
