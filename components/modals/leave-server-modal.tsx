@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Check, Copy, RefreshCw } from "lucide-react";
 
 import { useModal } from "@/hooks/use-modal-store";
 import {
@@ -12,10 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useOrigin } from "@/hooks/use-origin";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
