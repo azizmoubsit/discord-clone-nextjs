@@ -11,6 +11,7 @@ import { ServerSearch } from "@/components/server/server-search";
 import { Separator } from "@/components/ui/separator";
 import { ServerSection } from "@/components/server/server-section";
 import { ServerChannel } from "@/components/server/server-channel";
+import { ServerMember } from "@/components/server/server-member";
 
 interface ServerSidebarProps {
   serverId: string;
@@ -122,9 +123,38 @@ const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
             ))}
           </div>
         )}
-        {!!textChannels?.length && (
+        {!!audioChannels?.length && (
           <div className="mb-2">
-            <ServerSection label="Members" sectionType="members" role={role} />
+            <ServerSection
+              label="Audio Channels"
+              sectionType="channels"
+              channelType={ChannelType.AUDIO}
+              role={role}
+            />
+            {audioChannels.map((channel) => (
+              <ServerChannel key={channel.id} channel={channel} server={server} role={role} />
+            ))}
+          </div>
+        )}
+        {!!videoChannels?.length && (
+          <div className="mb-2">
+            <ServerSection
+              label="Video Channels"
+              sectionType="channels"
+              channelType={ChannelType.VIDEO}
+              role={role}
+            />
+            {videoChannels.map((channel) => (
+              <ServerChannel key={channel.id} channel={channel} server={server} role={role} />
+            ))}
+          </div>
+        )}
+        {!!members?.length && (
+          <div className="mb-2">
+            <ServerSection label="Members" sectionType="members" role={role} server={server} />
+            {members.map((member) => (
+              <ServerMember key={member.id} member={member} server={server} />
+            ))}
           </div>
         )}
       </ScrollArea>
