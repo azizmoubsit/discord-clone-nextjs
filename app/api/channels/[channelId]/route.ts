@@ -3,7 +3,7 @@ import { db } from "@/lib/db";
 import { MemberRole } from "@prisma/client";
 import { NextResponse } from "next/server";
 
-export async function POST(req: Request) {
+export async function DELETE(req: Request, { params }: { params: { channelId: string } }) {
   try {
     const profile = await currentProfile();
 
@@ -15,21 +15,25 @@ export async function POST(req: Request) {
 
     if (!serverId) return new NextResponse("Server ID missing", { status: 400 });
 
-    const { name, type } = await req.json();
-
     const server = await db.server.update({
       where: {
         id: serverId,
         members: {
-          some: { profileId: profile.id, role: { in: [MemberRole.ADMIN, MemberRole.MODERATOR] } },
+          some: {
+            profileId: profile.id,
+            role: {
+              in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+            },
+          },
         },
       },
       data: {
         channels: {
-          create: {
-            name,
-            type,
-            profileId: profile.id,
+          delete: {
+            id: params.channelId,
+            name: {
+              not: "general",
+            },
           },
         },
       },
