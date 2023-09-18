@@ -1,14 +1,17 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import qs from "query-string";
+import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Form, FormControl, FormField, FormItem } from "../ui/form";
-import { Plus, Smile } from "lucide-react";
-import { Input } from "../ui/input";
-import axios from "axios";
+import { Plus } from "lucide-react";
+
 import { useModal } from "@/hooks/use-modal-store";
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { EmojiPicker } from "@/components/emoji-picker";
 
 interface ChatInputProps {
   apiUrl: string;
@@ -23,6 +26,7 @@ const formSchema = z.object({
 
 const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
   const { onOpen } = useModal();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -40,6 +44,8 @@ const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
         query,
       });
       await axios.post(url, values);
+      form.reset();
+      router.refresh();
     } catch (error) {
       console.error(error);
     }
@@ -68,9 +74,11 @@ const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
                     placeholder={`Message ${type === "conversation" ? name : `#${name}`}`}
                     {...field}
                   />
-                  <button className="absolute top-7 right-8">
-                    <Smile />
-                  </button>
+                  <div className="absolute top-7 right-8">
+                    <EmojiPicker
+                      onChange={(emoji: string) => field.onChange(`${field.value} ${emoji}`)}
+                    />
+                  </div>
                 </div>
               </FormControl>
             </FormItem>
