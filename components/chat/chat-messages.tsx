@@ -85,7 +85,7 @@ export const ChatMessages = ({
                 timestamp={format(new Date(message.createdAt), DATE_FORMAT)}
                 isUpdated={message.createdAt !== message.updatedAt}
                 socketUrl={socketUrl}
-                sockerQuery={socketQuery}
+                socketQuery={socketQuery}
                 member={message.member}
               />
             ))}
