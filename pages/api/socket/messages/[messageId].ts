@@ -15,8 +15,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponseS
     const { messageId, serverId, channelId } = req.query;
     const { content } = req.body;
 
-    console.log({ content });
-
     if (!profile) {
       return res.status(401).json({ error: "Unauthorized" });
     }

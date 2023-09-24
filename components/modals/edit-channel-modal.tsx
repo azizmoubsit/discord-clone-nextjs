@@ -75,7 +75,7 @@ export const EditChannelModal = () => {
       const url = qs.stringifyUrl({
         url: `/api/channels/${channel?.id}`,
         query: {
-          serverId: params.serverId,
+          serverId: params?.serverId,
         },
       });
       await axios.patch(url, values);

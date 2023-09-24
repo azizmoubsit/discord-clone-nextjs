@@ -14,31 +14,24 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { useParams, useRouter } from "next/navigation";
 
-export const DeleteChannelModal = () => {
-  const params = useParams();
-  const router = useRouter();
+export const DeleteMessageModal = () => {
   const { isOpen, onClose, type, data } = useModal();
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const isModalOpen = isOpen && type === "deleteChannel";
-  const { channel } = data;
+  const isModalOpen = isOpen && type === "deleteMessage";
+  const { apiUrl, query } = data;
 
   const onDeleteChannel = async () => {
     try {
       setIsLoading(true);
       const url = qs.stringifyUrl({
-        url: `/api/channels/${channel?.id}`,
-        query: {
-          serverId: params?.serverId,
-        },
+        url: apiUrl as string,
+        query,
       });
       await axios.delete(url);
       onClose();
-      router.refresh();
-      router.push(`/servers/${params?.serverId}`);
     } catch (error) {
       console.error(error);
     } finally {
@@ -50,12 +43,11 @@ export const DeleteChannelModal = () => {
     <Dialog open={isModalOpen} onOpenChange={onClose}>
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
-          <DialogTitle className="text-2xl text-center font-bold">Delete channel</DialogTitle>
+          <DialogTitle className="text-2xl text-center font-bold">Delete message</DialogTitle>
           <DialogDescription className="text-center text-zinc-500">
             Are you sure you want to do this?
             <br />
-            <span className="text-indigo-500 font-semibold">{channel?.name}</span> will be
-            permanantly deleted.
+            The message will be permanatly deleted
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="bg-gray-100 px-6 py-4">
