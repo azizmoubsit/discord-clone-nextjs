@@ -40,7 +40,7 @@ export const ServerChannel = ({ channel, server, role }: ServerChannelProps) => 
     <button
       className={cn(
         "group p-2 rounded-md flex items-center gap-x-2 w-full hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50 transition mb-1",
-        params.channelId === channel.id && "bg-zinc-700/20 dark:bg-zinc-700"
+        params?.channelId === channel.id && "bg-zinc-700/20 dark:bg-zinc-700"
       )}
       onClick={onClick}
     >
@@ -48,7 +48,7 @@ export const ServerChannel = ({ channel, server, role }: ServerChannelProps) => 
       <p
         className={cn(
           "line-clamp-1 font-semibold text-zinc-500 group-hover:text-zinc-600 dark:text-zinc-400 dark:group-hover:text-zinc-300 transition",
-          params.channelId === channel.id &&
+          params?.channelId === channel.id &&
             "text-primary dark:text-zinc-200 dark:group-hover:text-white"
         )}
       >
